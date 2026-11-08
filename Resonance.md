@@ -4,7 +4,7 @@ A Fabric mod for Minecraft 1.21.1. Use an amethyst shard to send out a resonant 
 briefly shows where hostile mobs can spawn around you. Required on both client and server.
 
 ## Using it
-- Right-click with an amethyst shard: uses up one shard, plays the amethyst chime, and sends a
+- Right-click with an amethyst shard: uses up one shard, plays the amethyst break and chime sounds, and sends a
   pulse outward from you.
 - As the pulse spreads (about 1 s to reach the edge), spawnable spots light up,
   nearest first, and stay visible for about 5 s.
@@ -39,9 +39,9 @@ The server scans and sends the result to the player who used the pulse; the clie
 ## Config (`config/resonance.json`)
 | Option | Default | Description |
 |---|---|---|
-| `radius` | 16 | Pulse radius in blocks. |
+| `radius` | 32 | Pulse radius in blocks. |
 | `durationTicks` | 100 | How long spots stay visible. |
-| `cooldownTicks` | 200 | Item cooldown after a pulse. |
+| `cooldownTicks` | 40 | Item cooldown after a pulse. |
 | `consumeItem` | true | Use up the shard. |
 | `maxSpots` | 16384 | Cap on marked spots, nearest first (limit 65536). |
 | `showNightSpots` | true | Show the yellow "spawnable at night" spots. |

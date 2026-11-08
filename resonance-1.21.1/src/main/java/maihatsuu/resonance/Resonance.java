@@ -57,6 +57,8 @@ public class Resonance implements ModInitializer {
 		}
 
 		level.playSound(null, player.getX(), player.getY(), player.getZ(),
+				SoundEvents.AMETHYST_BLOCK_BREAK, SoundSource.PLAYERS, 0.35F, 1.0F);
+		level.playSound(null, player.getX(), player.getY(), player.getZ(),
 				SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.PLAYERS, 1.0F, 1.0F);
 		if (config.cooldownTicks > 0) {
 			player.getCooldowns().addCooldown(stack.getItem(), config.cooldownTicks);

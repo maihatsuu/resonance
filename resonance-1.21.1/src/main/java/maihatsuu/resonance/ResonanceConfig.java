@@ -17,9 +17,9 @@ public class ResonanceConfig {
 	/** At 9 bytes per spot this keeps a pulse packet well under the 1 MiB payload limit. */
 	private static final int MAX_SPOTS = 65536;
 
-	public int radius = 16;
+	public int radius = 32;
 	public int durationTicks = 100;
-	public int cooldownTicks = 200;
+	public int cooldownTicks = 40;
 	public boolean consumeItem = true;
 	public int maxSpots = 16384;
 	public boolean showNightSpots = true;
