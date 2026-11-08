@@ -11,6 +11,14 @@ repositories {
 	// for more information about repositories.
 	maven { url = 'https://maven.shedaniel.me/' }
 	maven { url = 'https://maven.terraformersmc.com/releases/' }
+	exclusiveContent {
+		forRepository {
+			maven { url = 'https://api.modrinth.com/maven' }
+		}
+		filter {
+			includeGroup 'maven.modrinth'
+		}
+	}
 }
 
 loom {
@@ -22,6 +30,10 @@ loom {
 			sourceSet sourceSets.client
 		}
 	}
+}
+
+configurations {
+	productionMods { transitive = false }
 }
 
 dependencies {
@@ -38,6 +50,21 @@ dependencies {
 		exclude group: "net.fabricmc.fabric-api"
 	}
 	modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
+
+	// prodClient only. Iris crashes in dev runs, during Loom's dev-only mixin remapping.
+	productionMods "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+	productionMods "me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}"
+	productionMods "com.terraformersmc:modmenu:${project.modmenu_version}"
+	productionMods "maven.modrinth:sodium:${project.sodium_version}"
+	productionMods "maven.modrinth:iris:${project.iris_version}"
+}
+
+// Launches the built jar like a real install, for testing against shader packs in run/shaderpacks.
+tasks.register("prodClient", net.fabricmc.loom.task.prod.ClientProductionRunTask) {
+	mods.from(configurations.productionMods)
+	mods.from(tasks.named("remapJar"))
+	runDir = file("run")
+	useXVFB = false
 }
 
 processResources {

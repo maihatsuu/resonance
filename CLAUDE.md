@@ -8,7 +8,7 @@ Resonance is a Fabric mod for Minecraft 1.21.1. Using an amethyst shard sends a 
 
 The Gradle project is in `resonance-1.21.1/`, and **all Gradle commands run from there**. In `src/main`, `Resonance` handles item use, `SpawnScanner` finds and colours spots, and `ResonanceConfig` loads `config/resonance.json`. The result goes to the using player in a `PulsePayload`; `PulseRenderer` in `src/client` draws it. There are no mixins.
 
-`Resonance.md` (repo root) is the design spec. It defines behaviour, config options and defaults, and manual test scenarios, and lists open questions such as the mod's name and whether the shard is consumed. Read it before implementing a feature, and don't treat its open questions as settled.
+`README.md` (repo root) documents behaviour, config options and defaults, and the manual test checklist. Keep it in step with changes to any of those.
 
 ## Commands
 
@@ -18,9 +18,10 @@ Run from `resonance-1.21.1/`:
 ./gradlew build       # compile and produce the jars in build/libs/
 ./gradlew runClient   # launch a dev client
 ./gradlew runServer   # launch a dev dedicated server
+./gradlew prodClient  # launch the built jar like a real install, with Sodium and Iris (Iris crashes under runClient)
 ```
 
-There is no linter and no test source set, so there is no way to run a single test. Verification is manual, using the scenarios in the Testing section of `Resonance.md`.
+There is no linter and no test source set, so there is no way to run a single test. Verification is manual, using the checklist in `README.md`.
 
 ## Architecture constraints
 
