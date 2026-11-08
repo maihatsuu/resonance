@@ -43,10 +43,13 @@ The server scans and sends the result to the player who used the pulse; the clie
 | `durationTicks` | 100 | How long spots stay visible. |
 | `cooldownTicks` | 200 | Item cooldown after a pulse. |
 | `consumeItem` | true | Use up the shard. |
-| `maxSpots` | 512 | Cap on marked spots. |
+| `maxSpots` | 16384 | Cap on marked spots, nearest first (limit 65536). |
 | `showNightSpots` | true | Show the yellow "spawnable at night" spots. |
 | `vibration` | true | Pulse counts as a vibration. |
 | `revealMobs` | false | Nearby hostile mobs glow briefly. |
+
+With Mod Menu and Cloth Config installed, `consumeItem`, `cooldownTicks` and `radius` can be edited
+in game. The server's own config is what applies, so the menu only changes singleplayer behaviour.
 
 Items that trigger a pulse come from an item tag, `resonance:pulse_items` (default
 `minecraft:amethyst_shard`), so a datapack can change them.

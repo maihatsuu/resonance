@@ -1,0 +1,9 @@
+{
+	"config.resonance.title": "Resonance",
+	"config.resonance.general": "General",
+	"config.resonance.consumeItem": "Consume shard",
+	"config.resonance.cooldownTicks": "Cooldown (ticks)",
+	"config.resonance.cooldownTicks.tooltip": "20 ticks = 1 second",
+	"config.resonance.radius": "Pulse distance (blocks)",
+	"config.resonance.radius.tooltip": "How far the pulse reaches. Larger distances scan more blocks."
+}

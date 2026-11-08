@@ -84,6 +84,10 @@ public class Resonance implements ModInitializer {
 				.forEach(entity -> entity.addEffect(new MobEffectInstance(MobEffects.GLOWING, REVEAL_TICKS, 0, false, false)));
 	}
 
+	public static ResonanceConfig config() {
+		return config;
+	}
+
 	public static ResourceLocation id(String path) {
 		return ResourceLocation.fromNamespaceAndPath(MOD_ID, path);
 	}

@@ -20,6 +20,9 @@
 		],
 		"client": [
 			"maihatsuu.resonance.client.ResonanceClient"
+		],
+		"modmenu": [
+			"maihatsuu.resonance.client.ResonanceModMenu"
 		]
 	},
 	"depends": {
@@ -27,5 +30,9 @@
 		"minecraft": "~1.21.1",
 		"java": ">=21",
 		"fabric-api": "*"
+	},
+	"suggests": {
+		"cloth-config": "*",
+		"modmenu": "*"
 	}
 }

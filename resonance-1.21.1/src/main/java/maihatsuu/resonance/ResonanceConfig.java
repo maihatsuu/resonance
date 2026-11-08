@@ -13,22 +13,46 @@ import java.nio.file.Path;
 
 public class ResonanceConfig {
 	private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
-	private static final int MAX_RADIUS = 64;
+	public static final int MAX_RADIUS = 64;
+	/** At 9 bytes per spot this keeps a pulse packet well under the 1 MiB payload limit. */
+	private static final int MAX_SPOTS = 65536;
 
 	public int radius = 16;
 	public int durationTicks = 100;
 	public int cooldownTicks = 200;
 	public boolean consumeItem = true;
-	public int maxSpots = 512;
+	public int maxSpots = 16384;
 	public boolean showNightSpots = true;
 	public boolean vibration = true;
 	public boolean revealMobs = false;
 
 	public static ResonanceConfig load() {
-		Path path = FabricLoader.getInstance().getConfigDir().resolve("resonance.json");
-		ResonanceConfig config = Files.exists(path) ? read(path) : writeDefaults(path);
+		Path path = path();
+		ResonanceConfig config;
+		if (Files.exists(path)) {
+			config = read(path);
+		} else {
+			config = new ResonanceConfig();
+			config.save();
+		}
 		config.clamp();
 		return config;
+	}
+
+	public void save() {
+		Path path = path();
+		try {
+			Files.createDirectories(path.getParent());
+			try (Writer writer = Files.newBufferedWriter(path)) {
+				GSON.toJson(this, writer);
+			}
+		} catch (IOException e) {
+			Resonance.LOGGER.warn("Could not write {}", path, e);
+		}
+	}
+
+	private static Path path() {
+		return FabricLoader.getInstance().getConfigDir().resolve("resonance.json");
 	}
 
 	/** A file that can't be parsed is left alone so the user's edits aren't lost. */
@@ -45,23 +69,10 @@ public class ResonanceConfig {
 		return new ResonanceConfig();
 	}
 
-	private static ResonanceConfig writeDefaults(Path path) {
-		ResonanceConfig config = new ResonanceConfig();
-		try {
-			Files.createDirectories(path.getParent());
-			try (Writer writer = Files.newBufferedWriter(path)) {
-				GSON.toJson(config, writer);
-			}
-		} catch (IOException e) {
-			Resonance.LOGGER.warn("Could not write {}", path, e);
-		}
-		return config;
-	}
-
 	private void clamp() {
 		radius = Math.clamp(radius, 1, MAX_RADIUS);
 		durationTicks = Math.max(durationTicks, 0);
 		cooldownTicks = Math.max(cooldownTicks, 0);
-		maxSpots = Math.max(maxSpots, 0);
+		maxSpots = Math.clamp(maxSpots, 0, MAX_SPOTS);
 	}
 }
