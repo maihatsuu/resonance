@@ -26,7 +26,7 @@ Settings are stored in `config/resonance.json`. On a multiplayer server, the ser
 | `radius` | 32 | Pulse distance in blocks (1–64). |
 | `durationTicks` | 100 | How long tiles stay visible. |
 | `cooldownTicks` | 40 | Item cooldown after a pulse. |
-| `consumeItem` | true | Use up the shard. |
+| `consumeItem` | true | Use up the shard (it breaks into particles in front of you). |
 | `maxSpots` | 16384 | Cap on marked tiles, nearest first (limit 65536). |
 | `showNightSpots` | true | Show yellow tiles. |
 | `vibration` | true | The pulse counts as a vibration for sculk sensors. |
@@ -55,7 +55,7 @@ Iris crashes under `runClient`, so use `prodClient` to test shader packs, placin
 
 - Dark cave: red tiles on spawnable floors, none on slabs, glass or lit areas.
 - Surface in daytime: open grass shows yellow, torch-lit areas show nothing.
-- Cooldown overlay appears and the shard is consumed.
+- Cooldown overlay appears and the shard is consumed, breaking into shard particles in front of you.
 - Other players don't see the pulse.
 - A sculk sensor triggers when `vibration` is on.
 

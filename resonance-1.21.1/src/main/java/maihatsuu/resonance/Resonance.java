@@ -6,6 +6,8 @@ import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ItemParticleOption;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -25,6 +27,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,6 +67,7 @@ public class Resonance implements ModInitializer {
 			player.getCooldowns().addCooldown(stack.getItem(), config.cooldownTicks);
 		}
 		if (config.consumeItem) {
+			spawnShardParticles(player, level, stack);
 			stack.consume(1, player);
 		}
 		if (config.vibration) {
@@ -77,6 +81,13 @@ public class Resonance implements ModInitializer {
 		ServerPlayNetworking.send(player, new PulsePayload(origin, config.radius, config.durationTicks,
 				SpawnScanner.scan(level, origin, config)));
 		return InteractionResultHolder.success(stack);
+	}
+
+	/** Item-break shards in front of the player, like a tool breaking, so it's clear the shard was used up. */
+	private static void spawnShardParticles(ServerPlayer player, ServerLevel level, ItemStack stack) {
+		Vec3 pos = player.getEyePosition().add(player.getLookAngle().scale(0.5)).add(0, -0.25, 0);
+		level.sendParticles(new ItemParticleOption(ParticleTypes.ITEM, stack.copyWithCount(1)),
+				pos.x, pos.y, pos.z, 8, 0.1, 0.1, 0.1, 0.05);
 	}
 
 	private static void revealMobs(ServerPlayer player, ServerLevel level) {
